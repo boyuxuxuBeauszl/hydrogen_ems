@@ -56,7 +56,7 @@ hydrogen_ems/
 ├── data/                  # Recorded trajectory data (ignored by git)
 ├── main.py                # Program entry point
 └── requirements.txt
-
+```
 ---
 
 ## Control Logic Overview
@@ -70,6 +70,7 @@ This structure improves:
 - Safety
 - Interpretability
 - Deployability on real hardware
+
 
 ---
 
