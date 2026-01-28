@@ -1,0 +1,28 @@
+# ===== Python =====
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.env
+.venv/
+venv/
+
+# ===== Logs =====
+logs/
+*.log
+
+# ===== Data / Trajectories =====
+data/
+*.csv
+*.npy
+*.npz
+
+# ===== OS / IDE =====
+.DS_Store
+Thumbs.db
+.idea/
+
+# ===== Temporary =====
+*.tmp
+*.swp
