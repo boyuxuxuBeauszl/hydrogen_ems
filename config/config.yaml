@@ -1,0 +1,103 @@
+# config/config.yaml
+# ============================================================
+#  氢电混动车智能监督系统 - 配置文件
+#  所有频率、限幅、阈值均可在此修改
+# ============================================================
+
+# ------ 系统基本配置 ------
+system:
+  name: "HydrogenEV_Supervisor"
+  version: "1.0.0"
+  debug_mode: true                    # 调试模式（打印更多信息）
+
+# ------ 通信配置 ------
+communication:
+  # 通信方式: "serial" / "udp" / "mock"
+  type: "mock"                        # 开发时用 mock，硬件到了改成 serial
+
+  serial:
+    port: "/dev/ttyUSB0"              # 串口设备
+    baudrate: 115200                  # 波特率
+    timeout: 1.0                      # 超时时间 (秒)
+
+  udp:
+    local_ip: "192.168.1.100"         # 树莓派 IP
+    local_port: 5000                  # 接收端口
+    stm32_ip: "192.168.1.50"          # STM32 IP
+    stm32_port: 5001                  # STM32 端口
+
+  # 数据接收频率限制
+  max_receive_freq_hz: 100            # 最大接收频率
+
+# ------ 主循环配置 ------
+loop:
+  main_freq_hz: 10                    # 主循环频率 (Hz)
+  supervisor_freq_hz: 5               # DQN 建议计算频率 (Hz)
+  health_check_freq_hz: 1             # 健康检查频率 (Hz)
+  record_freq_hz: 10                  # 数据记录频率 (Hz)
+
+# ------ DQN 智能体配置 ------
+agent:
+  # 动作空间 (MPC 修正量 α)
+  action_space: [-0.100, -0.080, -0.060, -0.040, -0.020,
+                 -0.010, -0.005, 0.000, 0.005, 0.010,
+                 0.020, 0.040, 0.060, 0.080, 0.100]
+
+  # 输出限幅
+  alpha_min: -0.10                    # α 最小值
+  alpha_max: 0.10                     # α 最大值
+
+  # 平滑滤波 (防止建议值剧烈跳变)
+  smoothing_enabled: true
+  smoothing_factor: 0.3               # 新值权重 (0-1)，越小越平滑
+
+# ------ 健康监测阈值 ------
+health:
+  # SOC 阈值
+  soc_critical_low: 0.15              # 严重低电量
+  soc_warning_low: 0.25               # 低电量警告
+  soc_warning_high: 0.90              # 高电量警告
+  soc_critical_high: 0.95             # 严重高电量
+
+  # 电压阈值 (V)
+  voltage_min: 20.0
+  voltage_max: 28.0
+
+  # 电流阈值 (A)
+  current_max: 50.0
+
+  # 温度阈值 (°C)
+  temp_warning: 45.0
+  temp_critical: 60.0
+
+  # 氢气剩余量阈值
+  h2_warning: 0.20                    # 20% 剩余警告
+  h2_critical: 0.10                   # 10% 严重警告
+
+  # 通信超时
+  comm_timeout_sec: 2.0               # 超过此时间无数据视为断连
+
+# ------ 数据记录配置 ------
+recording:
+  enabled: true
+  output_dir: "data"                  # 输出目录
+
+  # 文件格式: "csv" / "json"
+  format: "csv"
+
+  # 单文件最大行数 (超过后自动新建文件)
+  max_rows_per_file: 10000
+
+  # 记录内容选择
+  record_raw_state: true              # 原始状态数据
+  record_human_input: true            # 人的控制输入
+  record_dqn_suggestion: true         # DQN 建议值
+  record_actual_action: true          # 实际执行动作
+  record_health_status: true          # 健康状态
+
+# ------ 日志配置 ------
+logging:
+  level: "INFO"                       # DEBUG / INFO / WARNING / ERROR
+  console_output: true                # 输出到控制台
+  file_output: true                   # 输出到文件
+  log_dir: "logs"
