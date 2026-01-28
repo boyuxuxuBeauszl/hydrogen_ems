@@ -32,30 +32,30 @@ Control adjustment / command
 
 ## Project Structure
 
+```text
 hydrogen_ems/
-├── config/ # Configuration files
-│ └── config.yaml
-├── core/ # Learning-based decision modules
-│ └── dqn_agent.py
-├── communication/ # Communication with STM32 / simulator
-│ ├── protocol.py
-│ ├── serial_comm.py
-│ ├── udp_comm.py
-│ └── mock_comm.py
-├── modules/ # System-level functional modules
-│ ├── supervisor.py
-│ ├── health_monitor.py
-│ ├── data_recorder.py
-│ └── state_manager.py
-├── utils/ # Utilities
-│ ├── logger.py
-│ └── config_loader.py
-├── tests/ # Unit tests
-├── logs/ # Runtime logs (ignored by git)
-├── data/ # Recorded trajectory data (ignored by git)
-├── main.py # Program entry point
+├── config/                # Configuration files
+│   └── config.yaml
+├── core/                  # Learning-based decision modules
+│   └── dqn_agent.py
+├── communication/         # Communication with STM32 / simulator
+│   ├── protocol.py
+│   ├── serial_comm.py
+│   ├── udp_comm.py
+│   └── mock_comm.py
+├── modules/               # System-level functional modules
+│   ├── supervisor.py
+│   ├── health_monitor.py
+│   ├── data_recorder.py
+│   └── state_manager.py
+├── utils/                 # Utilities
+│   ├── logger.py
+│   └── config_loader.py
+├── tests/                 # Unit tests
+├── logs/                  # Runtime logs (ignored by git)
+├── data/                  # Recorded trajectory data (ignored by git)
+├── main.py                # Program entry point
 └── requirements.txt
-
 
 ---
 
