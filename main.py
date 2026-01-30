@@ -24,6 +24,7 @@ from utils.config_loader import config
 from utils.logger import get_logger
 from communication.mock_comm import MockCommunicator
 from communication.serial_comm import SerialCommunicator
+from communication.ina219_comm import INA219Communicator  # <--- 导入新模块
 from modules.state_manager import StateManager
 from modules.supervisor import DQNSupervisor
 from modules.health_monitor import HealthMonitor
@@ -53,6 +54,7 @@ class HydrogenEMSupervisor:
             port = config.get('communication.serial.port', '/dev/ttyUSB0')
             baudrate = config.get('communication.serial.baudrate', 115200)
             self.comm = SerialCommunicator(port=port, baudrate=baudrate)
+            self.comm = INA219Communicator()  # <--- 使用 INA219
         else:
             self.comm = MockCommunicator()
 
